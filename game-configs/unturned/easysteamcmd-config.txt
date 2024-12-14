@@ -1,5 +1,5 @@
 APPID=1110390
-STARTUP_COMMAND=start "" "%~dp0Unturned.exe" -batchmode -nographics %*
+STARTUP_COMMAND=start "" "Unturned.exe" -batchmode -nographics %*
 AUTO_UPDATE=1
 VALIDATE=1
 STEAM_LOGIN=

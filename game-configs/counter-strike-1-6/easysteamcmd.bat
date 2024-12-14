@@ -2,13 +2,20 @@
 setlocal enabledelayedexpansion
 color 0A
 
+rem Check if running as administrator
+powershell -command "if (-not ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) { exit 1 } else { exit 0 }"
+if %errorlevel% neq 0 (
+    powershell -ExecutionPolicy Bypass -File "%~dp0elevate.ps1" "%~dpnx0"
+    exit /b
+)
+
 rem Supported Games
-set "counter-strike-1-6=easysteamcmd-config.txt"
+set "counter-strike-1-6=%~dp0easysteamcmd-config.txt"
 
 set "configFile=%counter-strike-1-6%"
 set "steamCmdUrl=https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
 set "steamCmdZip=steamcmd.zip"
-set "steamCmdFolder=steamcmd"
+set "steamCmdFolder=%~dp0../../steamcmd"
 
 for /f "tokens=1* delims==" %%a in (%configFile%) do (
     if "%%a"=="APPID" (

@@ -1,0 +1,2 @@
+Fri Dec 13 23:57:25 2024 UTC : Failed to create Service pipe (GLE 2)
+Fri Dec 13 23:57:25 2024 UTC : Failed to connect to Steam Service (GLE 131)

@@ -1,78 +1,71 @@
 @echo off
 setlocal enabledelayedexpansion
 color 0A
-set "configFile=easysteamcmd-config.txt"
-set "steamCmdUrl=https://steamcdn-a.akamaihd.net/client/installer/steamcmd.zip"
-set "steamCmdZip=steamcmd.zip"
-set "steamCmdFolder=steamcmd"
 
-for /f "tokens=1* delims==" %%a in (%configFile%) do (
-    if "%%a"=="APPID" (
-        set appid=%%b
-    ) else if "%%a"=="STARTUP_COMMAND" (
-        set startupCommand=%%b
-    ) else if "%%a"=="AUTO_UPDATE" (
-        set autoUpdate=%%b
-    ) else if "%%a"=="VALIDATE" (
-        set validate=%%b
-    ) else if "%%a"=="STEAM_LOGIN" (
-        set steamLogin=%%b
-    ) else if "%%a"=="STEAM_PASSWORD" (
-        set steamPassword=%%b
-    ) else if "%%a"=="BETA_BUILD" (
-        set betaBuild=%%b
-    )
-)
+rem Supported Games
+set "7daytoedie=./game-configs/7-days-to-die/easysteamcmd.bat"
+set "conan-exiles=./game-configs/conan-exiles/easysteamcmd.bat"
+set "counter-strike-1-6=./game-configs/counter-strike-1-6/easysteamcmd.bat"
+set "counter-strike-2=./game-configs/counter-strike-2/easysteamcmd.bat"
+set "counter-strike-source=./game-configs/counter-strike-source/easysteamcmd.bat"
+set "dayz=./game-configs/dayz/easysteamcmd.bat"
+set "deadlock=./game-configs/deadlock/easysteamcmd.bat"
+set "enshrouded=./game-configs/enshrouded/easysteamcmd.bat"
+set "killing-floor-2=./game-configs/killing-floor-2/easysteamcmd.bat"
+set "left-4-dead=./game-configs/left-4-dead/easysteamcmd.bat"
+set "left-4-dead-2=./game-configs/left-4-dead-2/easysteamcmd.bat"
+set "palworld=./game-configs/palworld/easysteamcmd.bat"
+set "pixark=./game-configs/pixark/easysteamcmd.bat"
+set "quake-live=./game-configs/quake-live/easysteamcmd.bat"
+set "satisfactory=./game-configs/satisfactory/easysteamcmd.bat"
+set "soldat=./game-configs/soldat/easysteamcmd.bat"
+set "sons-of-the-forest=./game-configs/sons-of-the-forest/easysteamcmd.bat"
+set "soulmask=./game-configs/soulmask/easysteamcmd.bat"
+set "sven-co-op=./game-configs/sven-co-op/easysteamcmd.bat"
+set "team-fortress-2=./game-configs/team-fortress-2/easysteamcmd.bat"
+set "unturned=./game-configs/unturned/easysteamcmd.bat" 
+set "valheim=./game-configs/valheim/easysteamcmd.bat"
+set "v-rising=./game-configs/v-rising/easysteamcmd.bat"
 
-if "!startupCommand:~-1!"=="=" (
-    set "startupCommand=!startupCommand:~0,-1!"
-)
+rem Get user input (example: "7daytoedie" or "conan-exiles")
+echo Please enter the name of the game you want to launch:
+echo choose one of the following:
+echo 7daytoedie
+echo conan-exiles
+echo counter-strike-1-6
+echo counter-strike-2
+echo counter-strike-source
+echo dayz
+echo deadlock
+echo enshrouded
+echo killing-floor-2
+echo left-4-dead
+echo left-4-dead-2
+echo palworld
+echo pixark
+echo quake-live
+echo satisfactory
+echo soldat
+echo sons-of-the-forest
+echo soulmask
+echo sven-co-op
+echo team-fortress-2
+echo unturned 
+echo valheim
+echo v-rising
 
-echo.
-echo Easy SteamCMD - https://github.com/ghostcap-gaming
-echo.
-echo Game AppID: %appid%
-echo Startup Command: %startupCommand%
-echo Auto Update: %autoUpdate%
-echo Validate: %validate%
-echo Steam Login: %steamLogin%
-echo Beta Build: %betaBuild%
-echo __________________________________________________________________
-echo.
+set /p "game_choice="
 
-if not exist "%steamCmdFolder%" (
-    if not exist "%steamCmdZip%" (
-        echo Downloading SteamCMD...
-        powershell -Command "(New-Object System.Net.WebClient).DownloadFile('%steamCmdUrl%', '%steamCmdZip%')"
-    )
-    echo Extracting SteamCMD...
-    powershell -Command "Expand-Archive -Path '%steamCmdZip%' -DestinationPath '%steamCmdFolder%'"
-)
-
-set "steamCmd=%steamCmdFolder%\steamcmd.exe"
-
-if "%steamLogin%"=="" (
-    set loginCmd=+login anonymous
+rem Check if the chosen game is valid
+if defined %game_choice% (
+  if exist "!%game_choice%!" (
+    echo Launching "%game_choice%"...
+    call "!%game_choice%!" 
+  ) else (
+    echo Error: Invalid game choice.
+  )
 ) else (
-    set loginCmd=+login %steamLogin% %steamPassword%
+  echo Please enter a valid game name.
 )
 
-if "%autoUpdate%"=="1" (
-    if "%validate%"=="1" (
-        if "%betaBuild%"=="" (
-            %steamCmd% %loginCmd% +force_install_dir ../ +app_update %appid% validate +quit
-        ) else (
-            %steamCmd% %loginCmd% +force_install_dir ../ +app_update %appid% -beta %betaBuild% validate +quit
-        )
-    ) else (
-        if "%betaBuild%"=="" (
-            %steamCmd% %loginCmd% +force_install_dir ../ +app_update %appid% +quit
-        ) else (
-            %steamCmd% %loginCmd% +force_install_dir ../ +app_update %appid% -beta %betaBuild% +quit
-        )
-    )
-)
-
-:startup
-%startupCommand%
-pause
+endlocal

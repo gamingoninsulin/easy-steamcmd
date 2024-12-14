@@ -55,3 +55,5 @@ For Easy SteamCMD, we use one simple config file called `easysteamcmd-config.txt
 | **STEAM_LOGIN/STEAM_PASSWORD** | **(OPTIONAL)** Some games **require** you to use your Steam account to verify you own the game. Simply enter your Steam username and password here. |
 | **BETA_BUILD** | **(OPTIONAL)** If you want to revert to a newer or older version of the game you can directly set the build id here. Also known as a branch. |
 
+Great Thanks to Ghostcap-gaming for creating this i [gamingoninuline](https://github.com/gamingoninsulin) have forked his project !
+

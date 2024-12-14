@@ -1,7 +1,0 @@
-APPID=730
-STARTUP_COMMAND=game\bin\win64\cs2.exe -dedicated +ip 0.0.0.0 -port 27015 +map de_mirage -maxplayers 31 +sv_setsteamaccount YOURGSLT +hostname "Hosted With Easy SteamCMD"
-AUTO_UPDATE=1
-VALIDATE=0
-STEAM_LOGIN=
-STEAM_PASSWORD=
-BETA_BUILD=
